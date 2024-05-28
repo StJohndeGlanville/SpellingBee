@@ -52,6 +52,114 @@
             border: 1px solid #ccc; /* Added a border */
             padding: 5px; /* Added padding */
         }
+        #info-icon {
+            font-size: 2em;
+            cursor: pointer;
+            margin-left: 10px;
+            vertical-align: middle;
+            position: absolute;
+            right: 10%;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 5px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the icon */
+            left: 50%;
+            margin-left: -150px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        #control-panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        #control-panel button {
+            margin-right: 10px; /* Add some space between the button and the tooltip */
+        }
+        #control-panel .tooltip {
+            margin-left: 10px;
+        }
+        #control-panel .tooltip .tooltiptext {
+            left: -200%; /* Adjust position to align tooltip with icon */
+        }
+        #control-panel .tooltip:hover .tooltiptext {
+            left: 50%;
+            margin-left: -150px;
+        }
+        #input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #input-container .tooltip {
+            margin-left: 10px;
+            position: relative;
+        }
+        #input-container .tooltip .tooltiptext {
+            left: -200%; /* Adjust position to align tooltip with icon */
+        }
+        #input-container .tooltip:hover .tooltiptext {
+            left: 50%;
+            margin-left: -150px;
+        }
+        #input-container button {
+            margin-left: 10px;
+        }
+        #input-container .tooltip {
+            margin-left: auto;
+        }
+        #input-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #input-container .tooltip {
+            margin-left: 10px;
+            position: absolute;
+            right: 10%;
+        }
+        #input-container .tooltip .tooltiptext {
+            left: -200%; /* Adjust position to align tooltip with icon */
+        }
+        #input-container .tooltip:hover .tooltiptext {
+            left: 50%;
+            margin-left: -150px;
+        }
+        #input-container button {
+            margin-left: 10px;
+        }
+        #input-container .tooltip {
+            margin-left: auto;
+        }
+        #language-selector {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        #language-selector select {
+            font-size: 1em;
+            padding: 5px;
+            background-color: #FFF9C4; /* Light yellow background color */
+            border: 1px solid #ccc; /* Added a border */
+        }
         #copyright {
             margin-top: 50px;
             font-size: 1em;
@@ -59,13 +167,36 @@
     </style>
 </head>
 <body>
+    <div id="language-selector">
+        <select onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="pl">Polski</option>
+            <option value="de">Deutsch</option>
+            <option value="da">Dansk</option>
+        </select>
+    </div>
     <img id="header-img" src="header.jpg" alt="Header Image">
-    <h1>Spelling Bee Competition</h1>
+    <h1 id="title">Spelling Bee Competition</h1>
     <div id="word-container">Click the button to get a word</div>
-    <button onclick="displayRandomWord()">Get Word</button>
-    <div>
+    <div id="control-panel">
+        <button id="get-word-button" onclick="displayRandomWord()">Get Word</button>
+    </div>
+    <div id="input-container">
         <input type="text" id="contestant-input" placeholder="Type the word here">
-        <button onclick="checkSpelling()">Submit</button>
+        <button id="submit-button" onclick="checkSpelling()">Submit</button>
+        <div class="tooltip">
+            <span id="info-icon">❓</span>
+            <div class="tooltiptext" id="tooltip-text">
+                This is a website to host a spelling bee. It is meant for the audience to see, not the competitor.
+                <ol>
+                    <li>Upload a text file (.txt) with your word list (each word in a new line; don't leave empty lines).</li>
+                    <li>Next, strike the Get Word button so that a word to be spelt appears for the competitor.</li>
+                    <li>Type in the letter the competitor utters for the audience to see if they are correct.</li>
+                    <li>You can always prepare a more challenging wordlist for your students and upload it to the site.</li>
+                    <li>Your file should be named <b>words.txt</b>.</li>
+                </ol>
+            </div>
+        </div>
     </div>
     <div id="result"></div>
     <div id="file-input-container">
@@ -114,6 +245,40 @@
                 document.getElementById('result').textContent = `Incorrect. The correct spelling is ${currentWord}.`;
                 document.getElementById('result').style.color = 'red';
             }
+        }
+
+        function changeLanguage(lang) {
+            const text = {
+                en: {
+                    title: "Spelling Bee Competition",
+                    getWordButton: "Get Word",
+                    submitButton: "Submit",
+                    tooltipText: "This is a website to host a spelling bee. It is meant for the audience to see, not the competitor.<ol><li>Upload a text file (.txt) with your word list (each word in a new line; don't leave empty lines).</li><li>Next, strike the Get Word button so that a word to be spelt appears for the competitor.</li><li>Type in the letter the competitor utters for the audience to see if they are correct.</li><li>You can always prepare a more challenging wordlist for your students and upload it to the site.</li><li>Your file should be named <b>words.txt</b>.</li></ol>"
+                },
+                pl: {
+                    title: "Konkurs Ortograficzny",
+                    getWordButton: "Pobierz Słowo",
+                    submitButton: "Zatwierdź",
+                    tooltipText: "To jest strona do organizowania konkursu ortograficznego. Jest przeznaczona dla publiczności, a nie dla uczestnika.<ol><li>Załaduj plik tekstowy (.txt) z listą słów (każde słowo w nowej linii; nie zostawiaj pustych linii).</li><li>Następnie naciśnij przycisk Pobierz Słowo, aby pojawiło się słowo do przeliterowania dla uczestnika.</li><li>Wpisz literę, którą wypowiada uczestnik, aby publiczność mogła sprawdzić, czy jest poprawna.</li><li>Zawsze możesz przygotować trudniejszą listę słów dla swoich uczniów i załadować ją na stronę.</li><li>Twój plik powinien być nazwany <b>words.txt</b>.</li></ol>"
+                },
+                de: {
+                    title: "Buchstabierwettbewerb",
+                    getWordButton: "Wort Holen",
+                    submitButton: "Absenden",
+                    tooltipText: "Dies ist eine Website, um einen Buchstabierwettbewerb auszurichten. Es ist für das Publikum gedacht, nicht für den Teilnehmer.<ol><li>Laden Sie eine Textdatei (.txt) mit Ihrer Wortliste hoch (jedes Wort in einer neuen Zeile; lassen Sie keine leeren Zeilen).</li><li>Drücken Sie als Nächstes die Schaltfläche Wort Holen, damit ein zu buchstabierendes Wort für den Teilnehmer erscheint.</li><li>Geben Sie den Buchstaben ein, den der Teilnehmer ausspricht, damit das Publikum sehen kann, ob er korrekt ist.</li><li>Sie können immer eine anspruchsvollere Wortliste für Ihre Schüler vorbereiten und auf die Website hochladen.</li><li>Ihre Datei sollte den Namen <b>words.txt</b> tragen.</li></ol>"
+                },
+                da: {
+                    title: "Stavekonkurrence",
+                    getWordButton: "Hent Ord",
+                    submitButton: "Indsend",
+                    tooltipText: "Dette er en hjemmeside til at afholde en stavekonkurrence. Det er beregnet til publikum, ikke deltageren.<ol><li>Upload en tekstfil (.txt) med din ordliste (hvert ord på en ny linje; lad ikke tomme linjer være).</li><li>Tryk derefter på knappen Hent Ord, så der vises et ord, der skal staves til for deltageren.</li><li>Skriv det bogstav, som deltageren siger, så publikum kan se, om det er korrekt.</li><li>Du kan altid forberede en mere udfordrende ordliste til dine elever og uploade den til siden.</li><li>Din fil skal navngives <b>words.txt</b>.</li></ol>"
+                }
+            };
+
+            document.getElementById('title').innerHTML = text[lang].title;
+            document.getElementById('get-word-button').innerHTML = text[lang].getWordButton;
+            document.getElementById('submit-button').innerHTML = text[lang].submitButton;
+            document.getElementById('tooltip-text').innerHTML = text[lang].tooltipText;
         }
     </script>
 </body>
