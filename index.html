@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Bee Competition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #FFDE59; /* Changed background color */
+        }
+        #header-img {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+        #word-container {
+            font-size: 3em;
+            margin: 30px 0;
+        }
+        input[type="text"] {
+            font-size: 2em; /* Increased font size for input field */
+            padding: 15px;
+            margin: 15px 0;
+            width: 60%; /* Adjusted width of input field */
+            background-color: #FFF9C4; /* Light yellow background color */
+            border: 1px solid #ccc; /* Added a border */
+        }
+        button {
+            font-size: 1.2em; /* Decreased font size for button */
+            padding: 10px 20px; /* Decreased padding for button */
+            cursor: pointer;
+            margin: 10px;
+            background-color: #FFF9C4; /* Light yellow background color */
+            border: 1px solid #ccc; /* Added a border */
+        }
+        #result {
+            margin-top: 30px;
+            font-size: 1.5em;
+        }
+        #file-input-container {
+            margin-top: 50px; /* Added margin to move the file input field */
+        }
+        #file-input {
+            background-color: #FFF9C4; /* Light yellow background color */
+            border: 1px solid #ccc; /* Added a border */
+            padding: 5px; /* Added padding */
+        }
+        #copyright {
+            margin-top: 50px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <img id="header-img" src="header.jpg" alt="Header Image">
+    <h1>Spelling Bee Competition</h1>
+    <div id="word-container">Click the button to get a word</div>
+    <button onclick="displayRandomWord()">Get Word</button>
+    <div>
+        <input type="text" id="contestant-input" placeholder="Type the word here">
+        <button onclick="checkSpelling()">Submit</button>
+    </div>
+    <div id="result"></div>
+    <div id="file-input-container">
+        <input type="file" id="file-input" accept=".txt" />
+    </div>
+    <div id="copyright">
+        &copy; 2024 odbelfra
+    </div>
+
+    <script>
+        let words = [];
+        let currentWord = '';
+
+        // Handle file input
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    words = content.split('\n').filter(word => word.trim().length > 0);
+                    console.log('Words loaded:', words);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function displayRandomWord() {
+            if (words.length > 0) {
+                const randomIndex = Math.floor(Math.random() * words.length);
+                currentWord = words[randomIndex].trim();
+                document.getElementById('word-container').textContent = currentWord;
+                document.getElementById('contestant-input').value = '';
+                document.getElementById('result').textContent = '';
+            } else {
+                document.getElementById('word-container').textContent = 'No words available';
+            }
+        }
+
+        function checkSpelling() {
+            const contestantInput = document.getElementById('contestant-input').value.trim();
+            if (contestantInput === currentWord) {
+                document.getElementById('result').textContent = 'Correct!';
+                document.getElementById('result').style.color = 'green';
+            } else {
+                document.getElementById('result').textContent = `Incorrect. The correct spelling is ${currentWord}.`;
+                document.getElementById('result').style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
