@@ -200,7 +200,7 @@
     </div>
     <div id="result"></div>
     <div id="file-input-container">
-        <input type="file" id="file-input" accept=".txt" />
+        <input type="file" id="file-input" accept=".txt">
     </div>
     <div id="copyright">
         &copy; 2024 odbelfra
@@ -232,7 +232,7 @@
                 document.getElementById('contestant-input').value = '';
                 document.getElementById('result').textContent = '';
             } else {
-                document.getElementById('word-container').textContent = 'No words available';
+                document.getElementById('word-container').textContent = getText("noWordsAvailable");
             }
         }
 
@@ -247,39 +247,77 @@
             }
         }
 
-        function changeLanguage(lang) {
-            const text = {
+        function getText(key) {
+            const texts = {
                 en: {
                     title: "Spelling Bee Competition",
                     getWordButton: "Get Word",
                     submitButton: "Submit",
-                    tooltipText: "This is a website to host a spelling bee. It is meant for the audience to see, not the competitor.<ol><li>Upload a text file (.txt) with your word list (each word in a new line; don't leave empty lines).</li><li>Next, strike the Get Word button so that a word to be spelt appears for the competitor.</li><li>Type in the letter the competitor utters for the audience to see if they are correct.</li><li>You can always prepare a more challenging wordlist for your students and upload it to the site.</li><li>Your file should be named <b>words.txt</b>.</li></ol>"
+                    wordContainer: "Click the button to get a word",
+                    contestantInputPlaceholder: "Type the word here",
+                    noWordsAvailable: "No words available",
+                    tooltipText: "This is a website to host a spelling bee. It is meant for the audience to see, not the competitor.<ol><li>Upload a text file (.txt) with your word list (each word in a new line; don't leave empty lines).</li><li>Next, strike the Get Word button so that a word to be spelt appears for the competitor.</li><li>Type in the letter the competitor utters for the audience to see if they are correct.</li><li>You can always prepare a more challenging wordlist for your students and upload it to the site.</li><li>Your file should be named <b>words.txt</b>.</li></ol>",
+                    chooseFile: "Choose file",
+                    noFileChosen: "No file chosen"
                 },
                 pl: {
                     title: "Konkurs Ortograficzny",
                     getWordButton: "Pobierz Słowo",
                     submitButton: "Zatwierdź",
-                    tooltipText: "To jest strona do organizowania konkursu ortograficznego. Jest przeznaczona dla publiczności, a nie dla uczestnika.<ol><li>Załaduj plik tekstowy (.txt) z listą słów (każde słowo w nowej linii; nie zostawiaj pustych linii).</li><li>Następnie naciśnij przycisk Pobierz Słowo, aby pojawiło się słowo do przeliterowania dla uczestnika.</li><li>Wpisz literę, którą wypowiada uczestnik, aby publiczność mogła sprawdzić, czy jest poprawna.</li><li>Zawsze możesz przygotować trudniejszą listę słów dla swoich uczniów i załadować ją na stronę.</li><li>Twój plik powinien być nazwany <b>words.txt</b>.</li></ol>"
+                    wordContainer: "Kliknij przycisk, aby dostać słowo",
+                    contestantInputPlaceholder: "Wpisz słowo tutaj",
+                    noWordsAvailable: "Brak dostępnych słów",
+                    tooltipText: "To jest strona do organizowania konkursu ortograficznego. Jest przeznaczona dla publiczności, a nie dla uczestnika.<ol><li>Załaduj plik tekstowy (.txt) z listą słów (każde słowo w nowej linii; nie zostawiaj pustych linii).</li><li>Następnie naciśnij przycisk Pobierz Słowo, aby pojawiło się słowo do przeliterowania dla uczestnika.</li><li>Wpisz literę, którą wypowiada uczestnik, aby publiczność mogła sprawdzić, czy jest poprawna.</li><li>Zawsze możesz przygotować trudniejszą listę słów dla swoich uczniów i załadować ją na stronę.</li><li>Twój plik powinien być nazwany <b>words.txt</b>.</li></ol>",
+                    chooseFile: "Wybierz plik",
+                    noFileChosen: "Nie wybrano pliku"
                 },
                 de: {
                     title: "Buchstabierwettbewerb",
                     getWordButton: "Wort Holen",
                     submitButton: "Absenden",
-                    tooltipText: "Dies ist eine Website, um einen Buchstabierwettbewerb auszurichten. Es ist für das Publikum gedacht, nicht für den Teilnehmer.<ol><li>Laden Sie eine Textdatei (.txt) mit Ihrer Wortliste hoch (jedes Wort in einer neuen Zeile; lassen Sie keine leeren Zeilen).</li><li>Drücken Sie als Nächstes die Schaltfläche Wort Holen, damit ein zu buchstabierendes Wort für den Teilnehmer erscheint.</li><li>Geben Sie den Buchstaben ein, den der Teilnehmer ausspricht, damit das Publikum sehen kann, ob er korrekt ist.</li><li>Sie können immer eine anspruchsvollere Wortliste für Ihre Schüler vorbereiten und auf die Website hochladen.</li><li>Ihre Datei sollte den Namen <b>words.txt</b> tragen.</li></ol>"
+                    wordContainer: "Klicken Sie auf die Schaltfläche, um ein Wort zu erhalten",
+                    contestantInputPlaceholder: "Geben Sie hier das Wort ein",
+                    noWordsAvailable: "Keine Wörter verfügbar",
+                    tooltipText: "Dies ist eine Website, um einen Buchstabierwettbewerb auszurichten. Es ist für das Publikum gedacht, nicht für den Teilnehmer.<ol><li>Laden Sie eine Textdatei (.txt) mit Ihrer Wortliste hoch (jedes Wort in einer neuen Zeile; lassen Sie keine leeren Zeilen).</li><li>Drücken Sie als Nächstes die Schaltfläche Wort Holen, damit ein zu buchstabierendes Wort für den Teilnehmer erscheint.</li><li>Geben Sie den Buchstaben ein, den der Teilnehmer ausspricht, damit das Publikum sehen kann, ob er korrekt ist.</li><li>Sie können immer eine anspruchsvollere Wortliste für Ihre Schüler vorbereiten und auf die Website hochladen.</li><li>Ihre Datei sollte den Namen <b>words.txt</b> tragen.</li></ol>",
+                    chooseFile: "Datei auswählen",
+                    noFileChosen: "Keine Datei ausgewählt"
                 },
                 da: {
                     title: "Stavekonkurrence",
                     getWordButton: "Hent Ord",
                     submitButton: "Indsend",
-                    tooltipText: "Dette er en hjemmeside til at afholde en stavekonkurrence. Det er beregnet til publikum, ikke deltageren.<ol><li>Upload en tekstfil (.txt) med din ordliste (hvert ord på en ny linje; lad ikke tomme linjer være).</li><li>Tryk derefter på knappen Hent Ord, så der vises et ord, der skal staves til for deltageren.</li><li>Skriv det bogstav, som deltageren siger, så publikum kan se, om det er korrekt.</li><li>Du kan altid forberede en mere udfordrende ordliste til dine elever og uploade den til siden.</li><li>Din fil skal navngives <b>words.txt</b>.</li></ol>"
+                    wordContainer: "Klik på knappen for at få et ord",
+                    contestantInputPlaceholder: "Indtast ordet her",
+                    noWordsAvailable: "Ingen ord tilgængelige",
+                    tooltipText: "Dette er en hjemmeside til at afholde en stavekonkurrence. Det er beregnet til publikum, ikke deltageren.<ol><li>Upload en tekstfil (.txt) med din ordliste (hvert ord på en ny linje; lad ikke tomme linjer være).</li><li>Tryk derefter på knappen Hent Ord, så der vises et ord, der skal staves til for deltageren.</li><li>Skriv det bogstav, som deltageren siger, så publikum kan se, om det er korrekt.</li><li>Du kan altid forberede en mere udfordrende ordliste til dine elever og uploade den til siden.</li><li>Din fil skal navngives <b>words.txt</b>.</li></ol>",
+                    chooseFile: "Vælg fil",
+                    noFileChosen: "Ingen fil valgt"
                 }
             };
 
-            document.getElementById('title').innerHTML = text[lang].title;
-            document.getElementById('get-word-button').innerHTML = text[lang].getWordButton;
-            document.getElementById('submit-button').innerHTML = text[lang].submitButton;
-            document.getElementById('tooltip-text').innerHTML = text[lang].tooltipText;
+            return texts[currentLang][key];
         }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('title').innerHTML = getText('title');
+            document.getElementById('get-word-button').innerHTML = getText('getWordButton');
+            document.getElementById('submit-button').innerHTML = getText('submitButton');
+            document.getElementById('word-container').innerHTML = getText('wordContainer');
+            document.getElementById('contestant-input').placeholder = getText('contestantInputPlaceholder');
+            document.getElementById('tooltip-text').innerHTML = getText('tooltipText');
+            document.getElementById('file-input').nextElementSibling.innerHTML = getText('chooseFile');
+        }
+
+        let currentLang = 'en';
+        changeLanguage(currentLang);
+
+        // Update file input text when a file is selected
+        document.getElementById('file-input').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : getText('noFileChosen');
+            this.nextElementSibling.innerHTML = fileName;
+        });
+
     </script>
 </body>
 </html>
